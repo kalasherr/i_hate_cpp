@@ -113,28 +113,36 @@ void SudokuCell::define_sector()
 
 void SudokuCell::check_cell()
 {	
+	bool error = false;
 	Array children = get_parent()->get_children();
 	for (int i = 0; i < children.size(); i++)
 	{
+		
 		SudokuCell *cell = Object::cast_to<SudokuCell>(children[i]);
 		if ((Object::cast_to<Label>(cell->get_child(0))->get_text() == Object::cast_to<Label>(get_child(0))->get_text()) && (Object::cast_to<Label>(get_child(0))->get_text()!="") && !(cell == this))
 		{
 			if (cell->sector == sector)
 			{
-				cell->set_self_modulate(Color(1,0,0,1));
-				set_self_modulate(Color(1,0,0,1));
+				error = true;
 			}
-			if (cell->position/9 == position/9)
+			else if (cell->position/9 == position/9)
 			{
-				cell->set_self_modulate(Color(1,0,0,1));
-				set_self_modulate(Color(1,0,0,1));
+				error = true;
 			}
-			if (cell->position%9 == position%9)
+			else if (cell->position%9 == position%9)
 			{
-				cell->set_self_modulate(Color(1,0,0,1));
-				set_self_modulate(Color(1,0,0,1));
+				error = true;;
 			}
+			
 		}
 		
+	}
+	if (error)
+	{
+		set_self_modulate(Color(1,0,0,1));
+	}
+	else
+	{
+		set_self_modulate(Color(1,1,1,1));
 	}
 }
