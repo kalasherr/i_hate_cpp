@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b5f45lfxl1wfj"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(50, 50)
+zoom = Vector2(4, 4)
+
+[node name="SudokuField" type="SudokuField" parent="."]
+offset_right = 8.0
+offset_bottom = 40.0
