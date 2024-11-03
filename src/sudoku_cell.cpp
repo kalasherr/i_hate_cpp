@@ -5,7 +5,7 @@
 #include <sudoku_field.h>
 #include <godot_cpp/classes/input.hpp>
 using namespace godot;
-bool changable = false;
+bool changable = true;
 int position;
 int sector;
 bool chosen = false;
@@ -34,13 +34,13 @@ void SudokuCell::on_button_pressed()
 	Array children = Object::cast_to<HFlowContainer>(get_parent())->get_children();
 	for (int i = 0; i < children.size(); i++)
 	{
-		if (Object::cast_to<SudokuCell>(children[i]) == this)
+		if (Object::cast_to<SudokuCell>(children[i]) != this)
 		{
-			chosen = true;
+			Object::cast_to<SudokuCell>(children[i])->chosen = false;
 		}
 		else
 		{
-			Object::cast_to<SudokuCell>(children[i])->chosen = false;
+			chosen = true;
 		}
 	}
 }
@@ -137,12 +137,16 @@ void SudokuCell::check_cell()
 		}
 		
 	}
-	if (error)
+	if (error && changable)
 	{
 		set_self_modulate(Color(1,0,0,1));
 	}
-	else
+	else if (changable)
 	{
 		set_self_modulate(Color(1,1,1,1));
+	}
+	else
+	{
+		set_self_modulate(Color(0.0,0.0,1.0,1.0));
 	}
 }

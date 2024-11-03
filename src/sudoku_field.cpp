@@ -51,10 +51,12 @@ void SudokuField::_ready()
             {
                 cell->changable = false;
                 Label *label_child = Object::cast_to<Label>(cell->get_child(0));
-                if (label_child != nullptr) 
-                {
                 label_child->set_text(UtilityFunctions::str(field[i][j]));
-                } 
+                cell->set_self_modulate(Color(0.0,0.0,1.0,1.0));
+            }
+            else
+            {
+                cell->changable = true;
             }
             
         }
@@ -115,59 +117,63 @@ void SudokuField::_process(double delta)
             chosen_cell = Object::cast_to<SudokuCell>(Object::cast_to<HFlowContainer>(get_child(0))->get_child(i));
         }
     }
-    if (true)
+    if (chosen_cell != nullptr)
     {
-        if (Input::get_singleton()->is_action_just_pressed("0"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("");
-		}
-        if (Input::get_singleton()->is_action_just_pressed("1"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("1");
-		}
-        if (Input::get_singleton()->is_action_just_pressed("2"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("2");
-		}
-        if (Input::get_singleton()->is_action_just_pressed("3"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("3");
-		}
-        if (Input::get_singleton()->is_action_just_pressed("4"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("4");
-		}
-	    if (Input::get_singleton()->is_action_just_pressed("5"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("5");
-		}
-	    if (Input::get_singleton()->is_action_just_pressed("6"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("6");
-		}
-	    if (Input::get_singleton()->is_action_just_pressed("7"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("7");
-		}
-	    if (Input::get_singleton()->is_action_just_pressed("8"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("8");
-		}
-	    if (Input::get_singleton()->is_action_just_pressed("9"))
-		{
-			Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
-			label->set_text("9");
-		}
+        if (chosen_cell->changable == true)
+        {
+            if (Input::get_singleton()->is_action_just_pressed("0"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("1"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("1");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("2"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("2");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("3"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("3");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("4"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("4");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("5"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("5");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("6"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("6");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("7"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("7");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("8"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("8");
+            }
+            if (Input::get_singleton()->is_action_just_pressed("9"))
+            {
+                Label *label = Object::cast_to<Label>(chosen_cell->get_child(0));
+                label->set_text("9");
+            }
+        }
     }
+    
     
     if (Object::cast_to<HFlowContainer>(get_child(0))->get_children().size() == 81)
     {
