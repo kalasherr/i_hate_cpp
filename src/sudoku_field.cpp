@@ -19,20 +19,12 @@ int SudokuField::x7 = 7;
 int SudokuField::x8 = 8;
 int SudokuField::x9 = 9;
 int SudokuField::counter = -1;
-int SudokuField::field[9][9] ={
-        {x1,x4,x3,x2,x8,x5,x9,x6,x7},
-        {x8,x5,x2,x6,x9,x7,x4,x3,x1},
-        {x6,x9,x7,x3,x4,x1,x2,x8,x5},
-        {x2,x3,x6,x7,x1,x4,x8,x5,x9},
-        {x4,x8,x1,x9,x5,x6,x3,x7,x2},
-        {x9,x7,x5,x8,x2,x3,x6,x1,x4},
-        {x7,x2,x9,x1,x3,x8,x5,x4,x6},
-        {x5,x6,x8,x4,x7,x2,x1,x9,x3},
-        {x3,x1,x4,x5,x6,x9,x7,x2,x8}
-    };
+int SudokuField::field[9][9];
 
 void SudokuField::_ready()
 {
+    shuffle_x();
+    
     HFlowContainer *cell_containter = memnew(HFlowContainer);
     cell_containter->set_size(Vector2(104,104));
     cell_containter->set_custom_minimum_size(Vector2(104,104));
@@ -47,7 +39,7 @@ void SudokuField::_ready()
             SudokuCell *cell = memnew(SudokuCell);
             get_child(0)->add_child(cell);
             double changable = UtilityFunctions::randf_range(0.0,1.0);
-            if (changable > 0.5)
+            if (changable > 0.6)
             {
                 cell->changable = false;
                 Label *label_child = Object::cast_to<Label>(cell->get_child(0));
@@ -86,29 +78,6 @@ SudokuField::~SudokuField()
 
 void SudokuField::_process(double delta) 
 {
-    // bool checked;
-    // for (int i = 0; i < get_children().size(); i++)
-    // {
-    //     if (Object::cast_to<Label>(Object::cast_to<SudokuCell>(get_children()[i]) ->get_child(0))->get_text() == "")
-    //     {
-    //         checked = false;
-    //     }
-    //     else
-    //     {
-    //         continue;
-    //     }
-    // }
-    // if (checked == false)
-    // {
-        
-    // }
-    // else
-    // {
-    //     if (SceneTree *tree = get_tree()) 
-    //     {
-    //         tree->quit();
-    //     }
-    // }
     SudokuCell *chosen_cell;
     for (int i = 0; i < Object::cast_to<HFlowContainer>(get_child(0))->get_children().size(); i++)
     {
@@ -292,5 +261,41 @@ void SudokuField::check_field()
     for (int i = 0; i < array.size(); i++)
     {
         Object::cast_to<SudokuCell>(array[i])->check_cell();
+    }
+}
+
+void SudokuField::shuffle_x()
+{
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rng(seed);
+    std::array<int, 9> xes = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::shuffle(xes.begin(), xes.end(), rng);
+    // UtilityFunctions::print(xes[0] + xes[1] + xes[2] + xes[3] + xes[4]);
+    x1 = xes[0];
+    x2 = xes[1];
+    x3 = xes[2];
+    x4 = xes[3];
+    x5 = xes[4];
+    x6 = xes[5];
+    x7 = xes[6];
+    x8 = xes[7];
+    x9 = xes[8];
+    int initial_field[9][9] = {
+        {x1,x4,x3,x2,x8,x5,x9,x6,x7},
+        {x8,x5,x2,x6,x9,x7,x4,x3,x1},
+        {x6,x9,x7,x3,x4,x1,x2,x8,x5},
+        {x2,x3,x6,x7,x1,x4,x8,x5,x9},
+        {x4,x8,x1,x9,x5,x6,x3,x7,x2},
+        {x9,x7,x5,x8,x2,x3,x6,x1,x4},
+        {x7,x2,x9,x1,x3,x8,x5,x4,x6},
+        {x5,x6,x8,x4,x7,x2,x1,x9,x3},
+        {x3,x1,x4,x5,x6,x9,x7,x2,x8}
+    };
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            field[i][j] = initial_field[i][j];
+        }
     }
 }

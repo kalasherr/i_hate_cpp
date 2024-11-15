@@ -1,6 +1,9 @@
 {
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
-        "random": "cpp"
-    }
+        "random": "cpp",
+        "algorithm": "cpp",
+        "array": "cpp"
+    },
+    "cmake.sourceDirectory": "C:/Users/kalas/Documents/GitHub/gdextension_cpp_example/godot-cpp"
 }

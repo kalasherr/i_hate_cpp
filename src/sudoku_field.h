@@ -38,6 +38,7 @@ public:
     void shuffle_groups(int array[9][9]);
     void shuffle_sudoku(int array[9][9]);
     void check_field();
+    void shuffle_x();
 
 private:
     double time_passed;
